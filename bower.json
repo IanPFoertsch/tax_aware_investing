@@ -1,0 +1,24 @@
+{
+  "name": "Tax Aware Investing",
+  "description": "SPA focusing on tax optimization for middle class investors",
+  "main": "index.js",
+  "authors": [
+    "Ian Foertsch <IanPFo@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "^4.16.6"
+  },
+  "devDependencies": {
+    "chart.js": "^2.5.0"
+  }
+}
