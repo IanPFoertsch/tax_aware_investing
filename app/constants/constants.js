@@ -54,3 +54,5 @@ Constants.FEDERAL_INCOME_BRACKETS = {
   '415050': 0.35,
   '1000000000': 0.396
 }
+
+export default Constants
