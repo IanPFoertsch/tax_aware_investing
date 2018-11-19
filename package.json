@@ -17,13 +17,16 @@
     "karma-cli": "^1.0.1",
     "lodash": "^4.16.6",
     "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^7.1.5",
     "babel-preset-react": "^6.24.1",
+    "chart.js": "^2.7.3",
     "css-loader": "^1.0.1",
     "e": "0.0.4",
     "eslint": "^4.19.1",
@@ -43,6 +46,8 @@
     "karma-bower": "^1.0.1",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",
+    "react-chartjs-2": "^2.7.4",
+    "redux-devtools": "^3.4.2",
     "style-loader": "^0.23.1",
     "webpack": "^4.24.0",
     "webpack-cli": "^3.1.2",
