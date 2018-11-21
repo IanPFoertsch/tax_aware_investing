@@ -5,10 +5,26 @@ import LineChartHolder from './line-chart-holder'
 import BarChartHolder from './bar-chart-holder'
 import PersonListener from '../document-listeners/person-listener'
 
+import {connect} from 'react-redux'
+
 class App extends React.Component {
 
   handleChange(event) {
     this.state.inputRows[event.target.name] = event.target.value
+    var action = {
+      type: 'UPDATE_PROJECTION',
+      input: event.target.name,
+      value: event.target.value
+    }
+    dispatch(this.state.inputRows)
+    // var labelKeys = Object.keys(this.state.inputRows)
+
+    //
+    // labelKeys.forEach((key) => {
+    //   action.inputs[key] = this.state.inputRows[key].value
+    // })
+    // console.log(action)
+    // dispatch(action)
   }
 
   constructor(props) {
@@ -62,5 +78,11 @@ class App extends React.Component {
     )
   }
 }
+// TODO: Make me work - https://stackoverflow.com/questions/35526940/how-to-get-dispatch-redux
+// function mapStateToProps(state) {
+//   return { stuff: state }
+// }
+//
+// export default connect(mapStateToProps)(App)
 
 export default App
