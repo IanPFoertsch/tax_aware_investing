@@ -1,5 +1,4 @@
-import Constants from '../constants/constants'
-
+import Constants from '../constants'
 import { combineReducers } from 'redux'
 
 const initialState = {
@@ -12,24 +11,20 @@ const initialState = {
   [Constants.CAREER_LENGTH]: 30,
   [Constants.AGE]: 30,
   [Constants.RETIREMENT_SPENDING]: 50000,
-  [Constants.RETIREMENT_LENGTH]: 50000,
+  [Constants.RETIREMENT_LENGTH]: 30,
 }
 
-function taxApplication(state = initialState, action) {
-  return initialState
+function taxApplication(state, action) {
+  if ((typeof state) === 'undefined') {
+    return initialState
+  } else if (action.type == 'UPDATE_PROJECTION') {
+    //make a copy of the state and return it, updated by the action
 
-
-  // this.state.inputRows[event.target.name] = event.target.value
-  // var labelKeys = Object.keys(this.state.inputRows)
-  // var action = {
-  //   type: 'UPDATE_PROJECTION',
-  //   inputs: {}
-  // }
-  //
-  // labelKeys.forEach((key) => {
-  //   action.inputs[key] = this.state.inputRows[key].value
-  // })
-  // console.log(action)
+    var newState = Object.assign({}, state, {
+      [action.input]: action.value
+    })
+    return newState
+  }
 }
 export default combineReducers({
   taxApplication

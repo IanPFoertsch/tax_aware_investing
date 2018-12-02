@@ -1,5 +1,3 @@
-'use-strict'
-
 function AccountDataAdapter() {}
 
 var accountValueData = function(account, maxTime) {
@@ -15,4 +13,4 @@ var accountValueData = function(account, maxTime) {
 AccountDataAdapter.accountValueData = accountValueData
 
 
-Adapters.AccountDataAdapter = AccountDataAdapter
+export default AccountDataAdapter

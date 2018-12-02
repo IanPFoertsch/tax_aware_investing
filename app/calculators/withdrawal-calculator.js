@@ -1,5 +1,7 @@
-'use-strict'
-var TaxCalculator = Calculator.TaxCalculator
+import Constants from '../constants'
+import TaxCalculator from './tax-calculator'
+
+
 function WithdrawalCalculator() {}
 
 WithdrawalCalculator.traditionalWithdrawalsToGoal = function(
@@ -70,4 +72,4 @@ WithdrawalCalculator.withdrawalUpToStandardDeductionFromTraditional = function(
   return traditionalWithdrawals
 }
 
-Calculator.WithdrawalCalculator = WithdrawalCalculator
+export default WithdrawalCalculator

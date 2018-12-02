@@ -1,4 +1,4 @@
-var Account = Models.Account
+import Account from './account'
 
 function AccumulatingAccount(label) {
   Account.call(this, label)
@@ -17,4 +17,4 @@ AccumulatingAccount.prototype.getPositiveFlowList = function() {
   return [this.contributions, this.interestFlows]
 }
 
-Models.AccumulatingAccount = AccumulatingAccount
+export default AccumulatingAccount

@@ -1,4 +1,4 @@
-var CashFlow = Models.CashFlow
+import CashFlow from './cash-flow'
 //Abstract SuperClass
 function Account(label) {
   this.label = label
@@ -118,4 +118,5 @@ Account.prototype.singlePeriodCompounding = function(timeStep) {
   return value * Constants.DEFAULT_GROWTH_RATE
 }
 
-Models.Account = Account
+
+export default Account

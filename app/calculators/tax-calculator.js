@@ -1,60 +1,63 @@
-'use-strict'
-function TaxCalculator() {}
+import Constants from '../constants'
 
-TaxCalculator.federalIncomeTax = function(taxableIncome) {
-  if (taxableIncome <= 0) {
-    return 0
+class TaxCalculator {
+  static federalIncomeTax(taxableIncome) {
+    // console.trace()
+    if (taxableIncome <= 0) {
+      return 0
+    }
+
+    var remainingIncome = taxableIncome
+    var previousBracket = 0
+    //TODO: Refine this iterative approach to make it more maintainable
+    var totalTax = _.reduce(Constants.FEDERAL_INCOME_BRACKETS, function(totalTax, rate, bracket) {
+      var currentBracket = parseInt(bracket)
+      var bracketMagnitude = currentBracket - previousBracket
+
+      var affectedIncome = TaxCalculator.minimum(remainingIncome, bracketMagnitude)
+      var taxesOwed = affectedIncome * rate
+
+      totalTax += taxesOwed
+
+      remainingIncome -= affectedIncome
+      previousBracket = currentBracket
+
+      return totalTax
+    }, 0)
+    return totalTax
   }
 
-  var remainingIncome = taxableIncome;
-  var previousBracket = 0;
-  //TODO: Refine this iterative approach to make it more maintainable
-  var totalTax = _.reduce(Constants.FEDERAL_INCOME_BRACKETS, function(totalTax, rate, bracket) {
-    var currentBracket = parseInt(bracket);
-    var bracketMagnitude = currentBracket - previousBracket;
+  static socialSecurityWithholding(income) {
+    //TODO: Assume for now that the user is not self-employed
+    var applicableIncome = TaxCalculator.minimum(income, Constants.SOCIAL_SECURITY_MAXIMUM)
+    return applicableIncome * Constants.SOCIAL_SECURITY_RATE
+  }
 
-    var affectedIncome = minimum(remainingIncome, bracketMagnitude);
-    var taxesOwed = affectedIncome * rate;
+  static medicareWithholding(income) {
+    //TODO: Assume for now that the user is not self-employed
+    return income * Constants.MEDICARE_RATE
+  }
 
-    totalTax += taxesOwed;
+  static netIncome(grossIncome, deductableContributions) {
+    var medicaid = TaxCalculator.medicareWithholding(grossIncome)
+    var socialSecurity = TaxCalculator.socialSecurityWithholding(grossIncome)
 
-    remainingIncome -= affectedIncome;
-    previousBracket = currentBracket;
+    var taxableIncome = TaxCalculator.lessDeductions(grossIncome, deductableContributions)
+    var federalIncomeTax = TaxCalculator.federalIncomeTax(taxableIncome)
 
-    return totalTax;
-  }, 0);
+    return grossIncome - (medicaid + socialSecurity + federalIncomeTax + deductableContributions)
+  }
 
-  return totalTax;
-};
+  static minimum(first, second) {
+    return Math.min.apply(Math, [first, second])
+  }
 
-TaxCalculator.socialSecurityWithholding = function(income) {
-  //TODO: Assume for now that the user is not self-employed
-  var applicableIncome = minimum(income, Constants.SOCIAL_SECURITY_MAXIMUM);
-  return applicableIncome * Constants.SOCIAL_SECURITY_RATE;
-};
-
-TaxCalculator.medicareWithholding = function(income) {
-  //TODO: Assume for now that the user is not self-employed
-  return income * Constants.MEDICARE_RATE
+  static numberToCurrencyString(number) {
+    var currencyPrefix = '$'
+    return currencyPrefix + number.toString()
+  }
 }
 
-TaxCalculator.netIncome = function(grossIncome, deductableContributions) {
-  var medicaid = TaxCalculator.medicareWithholding(grossIncome);
-  var socialSecurity = TaxCalculator.socialSecurityWithholding(grossIncome);
 
-  var taxableIncome = TaxCalculator.lessDeductions(grossIncome, deductableContributions);
-  var federalIncomeTax = TaxCalculator.federalIncomeTax(taxableIncome);
 
-  return grossIncome - (medicaid + socialSecurity + federalIncomeTax + deductableContributions) ;
-};
-
-function minimum(first, second) {
-  return Math.min.apply(Math, [first, second]);
-}
-
-function numberToCurrencyString(number) {
-  var currencyPrefix = '$';
-  return currencyPrefix + number.toString();
-}
-
-Calculator.TaxCalculator = TaxCalculator;
+export default TaxCalculator
