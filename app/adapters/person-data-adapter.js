@@ -1,4 +1,4 @@
-var AccountDataAdapter = Adapters.AccountDataAdapter
+import AccountDataAdapter from './account-data-adapter'
 
 //the data adapter is a tree crawler that outputs chart-formatted data
 //to the chartjsAdapter
@@ -30,4 +30,4 @@ var flowBalanceByTimeData = function(accounts, maxTime) {
 PersonDataAdapter.lineChartData = lineChartData
 PersonDataAdapter.flowBalanceByTimeData = flowBalanceByTimeData
 
-Adapters.PersonDataAdapter = PersonDataAdapter
+export default PersonDataAdapter

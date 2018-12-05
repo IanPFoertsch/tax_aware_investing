@@ -1,31 +1,86 @@
 var React = require('react')
-import Constants from '../constants/constants'
+import Constants from '../constants'
 import InputTable from './input-table'
-import Button from './button'
+import LineChartHolder from './line-chart-holder'
+import BarChartHolder from './bar-chart-holder'
+import PersonService from '../services/person-service'
+import { connect } from 'react-redux'
 
 class App extends React.Component {
-  render() {
-    var inputRows = [
-      { label: Constants.WAGES_AND_COMPENSATION, type: 'number', default: 50000 },
-      { label: Constants.TRADITIONAL_IRA_CONTRIBUTIONS, type: 'number', default: 1000},
-      { label: Constants.ROTH_IRA_CONTRIBUTIONS, type: 'number', default: 2000},
-      { label: Constants.TRADITIONAL_401K_CONTRIBUTIONS, type: 'number', default: 5000},
-      { label: Constants.ROTH_401K_CONTRIBUTIONS, type: 'number', default: 5000},
-      { label: Constants.BROKERAGE, type: 'number', default: 1000},
-      { label: Constants.CAREER_LENGTH, type: 'number', default: 20},
-      { label: Constants.AGE, type: 'number', default: 30},
-      { label: Constants.RETIREMENT_SPENDING, type: 'number', default: 7000},
-      { label: Constants.RETIREMENT_LENGTH, type: 'number', default: 10},
-    ]
 
+  handleChange(event) {
+    // this.state.inputRows[event.target.name] = event.target.value
+    var action = {
+      type: 'UPDATE_PROJECTION',
+      input: event.target.name,
+      value: parseInt(event.target.value)
+    }
+
+    this.store.dispatch(action)
+  }
+
+  buildPerson(personData) {
+    var personService = new PersonService(personData)
+    return personService.buildPerson()
+  }
+
+  constructor(props) {
+    super(props)
+    this.store = props.store
+    this.state = {
+      inputRows: {
+        [Constants.WAGES_AND_COMPENSATION]: {type: 'number', value: 70000 },
+        [Constants.TRADITIONAL_IRA_CONTRIBUTIONS]: {type: 'number', value: 5000 },
+        [Constants.ROTH_IRA_CONTRIBUTIONS]: {type: 'number', value: 2000 },
+        [Constants.ROTH_401K_CONTRIBUTIONS]: {type: 'number', value: 4000 },
+        [Constants.TRADITIONAL_401K_CONTRIBUTIONS]: {type: 'number', value: 14000 },
+        [Constants.BROKERAGE]: {type: 'number', value: 4000 },
+        [Constants.CAREER_LENGTH]: {type: 'number', value: 30 },
+        [Constants.AGE]: {type: 'number', value: 30 },
+        [Constants.RETIREMENT_SPENDING]: {type: 'number', value: 50000 },
+        [Constants.RETIREMENT_LENGTH]: {type: 'number', value: 30},
+      },
+      netWorthChart: {
+        cssClasses: ['chart-holder'],
+        canvas: { type: 'line'},
+      },
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  render() {
+    var person = this.buildPerson(this.props.person)
     return (
       <div>
-        <InputTable
-          rows={inputRows}
-        />
+        <div>
+          <form>
+            <InputTable
+              rows={this.state.inputRows}
+              onChange={this.handleChange}
+            />
+            <button type="submit">
+              Project Income
+            </button>
+          </form>
+        </div>
+        <div>
+          <LineChartHolder
+            person={person}
+          />
+          <BarChartHolder />
+        </div>
       </div>
     )
   }
 }
 
-export default App
+const mapStateToProps = (state) => {
+  //note: 'state' here is the new state returned by our reducers
+  return {person: state.taxApplication}
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

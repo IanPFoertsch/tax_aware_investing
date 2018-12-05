@@ -1,9 +1,10 @@
-var NonAccumulatingAccount = Models.NonAccumulatingAccount
-var AccumulatingAccount = Models.AccumulatingAccount
-var TaxCategory = Models.TaxCategory
-var PersonDataAdapter = Adapters.PersonDataAdapter
-var TaxCalculator = Calculator.TaxCalculator
-var WithdrawalCalculator = Calculator.WithdrawalCalculator
+import {NonAccumulatingAccount, TaxCategory, Expense} from './non-accumulating-account'
+import AccumulatingAccount from './accumulating-account'
+import _ from 'lodash'
+import PersonDataAdapter from '../adapters/person-data-adapter'
+import TaxCalculator from '../calculators/tax-calculator'
+import WithdrawalCalculator from '../calculators/withdrawal-calculator'
+import Constants from '../constants'
 
 function Person(age, workingPeriod, retirementLength) {
   this.retirementLength = retirementLength
@@ -47,6 +48,8 @@ Person.prototype.createWorkingPeriod = function(options) {
   this.createTraditional401kContribution(traditional401kContributions, this.age, retirementYear)
   this.createRoth401kContribution(roth401kContributions, this.age, retirementYear)
   this.createFederalInsuranceContributions()
+  // console.log('creating Working Period')
+  // fdasfda
   this.createFederalIncomeWithHolding(this.age, retirementYear)
 
 }
@@ -106,7 +109,7 @@ Person.prototype.retirementWithdrawalsForIndex = function(index, retirementSpend
   } else {
     traditionalWithdrawals = traditionalWithdrawals + traditionalWithdrawalsToGoal
   }
-  
+
   this.createTraditionalWithdrawal(traditionalWithdrawals, index, index)
   var updatedTaxableIncome = this.taxableIncomeForIndex(index)
 
@@ -188,8 +191,7 @@ Person.prototype.createFederalIncomeTaxFlows = function(value, startYear, endYea
 
 Person.prototype.createFederalIncomeWithHolding = function(startYear, endYear) {
   var indexes = _.range(startYear, endYear + 1)
-
-
+  // dfadf
   _.forEach(indexes, (timeIndex) => {
     var taxableIncome = this.taxableIncomeForIndex(timeIndex)
     var federalIncomeTax = TaxCalculator.federalIncomeTax(taxableIncome)
@@ -328,4 +330,4 @@ Person.prototype.getAccountFlowBalanceByTime = function () {
   return PersonDataAdapter.flowBalanceByTimeData(graphableAccounts, maxTime)
 }
 
-Models.Person = Person
+export default Person

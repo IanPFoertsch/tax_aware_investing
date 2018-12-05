@@ -12,4 +12,4 @@ CashFlow.prototype.getValue = function() {
   return this.value
 }
 
-Models.CashFlow = CashFlow
+export default CashFlow
