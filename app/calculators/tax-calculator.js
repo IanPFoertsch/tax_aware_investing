@@ -2,7 +2,7 @@ import Constants from '../constants'
 
 class TaxCalculator {
   static federalIncomeTax(taxableIncome) {
-    // console.trace()
+
     if (taxableIncome <= 0) {
       return 0
     }
@@ -10,7 +10,11 @@ class TaxCalculator {
     var remainingIncome = taxableIncome
     var previousBracket = 0
     //TODO: Refine this iterative approach to make it more maintainable
-    var totalTax = _.reduce(Constants.FEDERAL_INCOME_BRACKETS, function(totalTax, rate, bracket) {
+    const brackets = Object.keys(Constants.FEDERAL_INCOME_BRACKETS)
+
+    return brackets.reduce((totalTax, bracket) => {
+      var rate = Constants.FEDERAL_INCOME_BRACKETS[bracket]
+
       var currentBracket = parseInt(bracket)
       var bracketMagnitude = currentBracket - previousBracket
 
@@ -24,7 +28,7 @@ class TaxCalculator {
 
       return totalTax
     }, 0)
-    return totalTax
+
   }
 
   static socialSecurityWithholding(income) {

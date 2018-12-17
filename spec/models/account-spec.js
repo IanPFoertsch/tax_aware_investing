@@ -1,4 +1,5 @@
-var Account = Models.Account
+import Account from '../../app/models/account'
+import Constants from '../../app/constants'
 
 describe('Account', function() {
   var account

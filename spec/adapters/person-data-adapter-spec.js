@@ -1,8 +1,8 @@
-describe('PersonDataAdapter', function() {
-  var PersonDataAdapter = Adapters.PersonDataAdapter
-  var AccountDataAdapter = Adapters.AccountDataAdapter
-  var Account = Models.Account
+import PersonDataAdapter from '../../app/adapters/person-data-adapter'
+import Account from '../../app/models/account'
+import AccountDataAdapter from '../../app/adapters/account-data-adapter'
 
+describe('PersonDataAdapter', function() {
   let firstLabel
   let lastLabel
   let maxTime

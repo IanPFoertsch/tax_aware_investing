@@ -1,20 +1,19 @@
 import Account from './account'
+import _ from '../../node_modules/lodash/lodash.js'
 
-function AccumulatingAccount(label) {
-  Account.call(this, label)
-  this.interestFlows = {}
+export default class AccumulatingAccount extends Account {
+  constructor(label) {
+    super(label)
+    this.interestFlows = {}
+  }
+
+  getValueAtTime(time) {
+    return _.reduce(this.timeIndices(time), (value, index) =>  {
+      return value + this.getFlowBalanceAtTime(index)
+    }, 0)
+  }
+
+  getPositiveFlowList() {
+    return [this.contributions, this.interestFlows]
+  }
 }
-
-AccumulatingAccount.prototype = Object.create(Account.prototype)
-
-AccumulatingAccount.prototype.getValueAtTime = function(time) {
-  return _.reduce(this.timeIndices(time), (value, index) =>  {
-    return value + this.getFlowBalanceAtTime(index)
-  }, 0)
-}
-
-AccumulatingAccount.prototype.getPositiveFlowList = function() {
-  return [this.contributions, this.interestFlows]
-}
-
-export default AccumulatingAccount

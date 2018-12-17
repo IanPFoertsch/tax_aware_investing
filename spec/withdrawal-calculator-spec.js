@@ -1,5 +1,6 @@
-var WithdrawalCalculator = Calculator.WithdrawalCalculator
-var TaxCalculator = Calculator.TaxCalculator
+import WithdrawalCalculator from '../app/calculators/withdrawal-calculator'
+import TaxCalculator from '../app/calculators/tax-calculator'
+import Constants from '../app/constants'
 
 describe('WithdrawalCalculator', function() {
   describe('traditionalWithdrawalsToGoal', () => {

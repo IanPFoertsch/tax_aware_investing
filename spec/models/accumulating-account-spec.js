@@ -1,5 +1,6 @@
-var AccumulatingAccount = Models.AccumulatingAccount
-var NonAccumulatingAccount = Models.NonAccumulatingAccount
+import AccumulatingAccount from '../../app/models/accumulating-account'
+import { NonAccumulatingAccount } from '../../app/models/non-accumulating-account'
+import Constants from '../../app/constants'
 
 describe('AccumulatingAccount', function() {
   var accumulatingAccount
@@ -30,6 +31,7 @@ describe('AccumulatingAccount', function() {
         expect(accumulatingAccount.getValueAtTime(maxTime)).toEqual(invalue * 5)
       })
     })
+
 
     describe('with cashflows inward', () => {
       beforeEach(() => {
