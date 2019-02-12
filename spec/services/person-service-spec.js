@@ -1,30 +1,27 @@
-
-var PersonService = Services.PersonService
-var Person = Models.Person
+import PersonService from '../../app/services/person-service'
+import Person from '../../app/models/person'
+import Constants from '../../app/constants'
 
 describe('PersonService', function() {
-  var listener
+  var personData
   var service
-  var listenerStubHash = {}
 
   beforeEach(() => {
-    listener = { getInput: function(arg) {
-      return listenerStubHash[arg] }
-    }
-    service = new PersonService(listener)
-
+    personData = {}
+    service = new PersonService(personData)
   })
 
   describe('getListenerInput', () => {
     var constant = 'SOME CONSTANT'
+    var constantValue = 10
 
     beforeEach(() => {
-      spyOn(listener, 'getInput')
+      personData[constant] = constantValue
     })
 
     it('queries the listener with the constant', () => {
-      service.getListenerInput(constant)
-      expect(listener.getInput).toHaveBeenCalledWith(constant)
+
+      expect(service.getInput(constant)).toEqual(constantValue)
     })
   })
 
@@ -32,7 +29,7 @@ describe('PersonService', function() {
     var ageValue = 30
 
     beforeEach(() => {
-      listenerStubHash[Constants.AGE] = ageValue
+      personData[Constants.AGE] = ageValue
     })
 
     it('builds a person with the listeners age', () => {
@@ -50,13 +47,13 @@ describe('PersonService', function() {
       var retirementSpending = 10000
 
       beforeEach(() => {
-        listenerStubHash[Constants.WAGES_AND_COMPENSATION] = wages
-        listenerStubHash[Constants.CAREER_LENGTH] = careerLength
-        listenerStubHash[Constants.AGE] = age
-        listenerStubHash[Constants.RETIREMENT_LENGTH] = retirementLength
-        listenerStubHash[Constants.ROTH_401K_CONTRIBUTIONS] = roth401kContributions
-        listenerStubHash[Constants.TRADITIONAL_401K_CONTRIBUTIONS] = traditional401kContributions
-        listenerStubHash[Constants.RETIREMENT_SPENDING] = retirementSpending
+        personData[Constants.WAGES_AND_COMPENSATION] = wages
+        personData[Constants.CAREER_LENGTH] = careerLength
+        personData[Constants.AGE] = age
+        personData[Constants.RETIREMENT_LENGTH] = retirementLength
+        personData[Constants.ROTH_401K_CONTRIBUTIONS] = roth401kContributions
+        personData[Constants.TRADITIONAL_401K_CONTRIBUTIONS] = traditional401kContributions
+        personData[Constants.RETIREMENT_SPENDING] = retirementSpending
       })
 
       it('creates a person with the specified age, career length and retirement length', () => {

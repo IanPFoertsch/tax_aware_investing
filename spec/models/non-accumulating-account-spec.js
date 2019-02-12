@@ -1,5 +1,6 @@
-var NonAccumulatingAccount = Models.NonAccumulatingAccount
-var Account = Models.Account
+import {NonAccumulatingAccount} from '../../app/models/non-accumulating-account'
+import Account from '../../app/models/account'
+import Constants from '../../app/constants'
 
 describe('NonAccumulatingAccount', function() {
   var nonAccumulatingAccount

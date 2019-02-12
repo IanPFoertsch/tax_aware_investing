@@ -1,7 +1,6 @@
 import Constants from '../constants'
 import TaxCalculator from './tax-calculator'
 
-
 function WithdrawalCalculator() {}
 
 WithdrawalCalculator.traditionalWithdrawalsToGoal = function(

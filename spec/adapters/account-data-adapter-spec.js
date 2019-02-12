@@ -1,6 +1,5 @@
-var AccountDataAdapter = Adapters.AccountDataAdapter
-var Person = Models.Person
-var AccumulatingAccount = Models.AccumulatingAccount
+import AccountDataAdapter from '../../app/adapters/account-data-adapter'
+import AccumulatingAccount from '../../app/models/accumulating-account'
 
 describe('AccountDataAdapter', function() {
   let account

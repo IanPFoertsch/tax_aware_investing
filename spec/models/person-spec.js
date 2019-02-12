@@ -1,12 +1,12 @@
-var Expense = Models.Expense
-var Person = Models.Person
-var CashFlow = Models.CashFlow
-var NonAccumulatingAccount = Models.NonAccumulatingAccount
-var AccumulatingAccount = Models.AccumulatingAccount
-var TaxCategory = Models.TaxCategory
-var PersonDataAdapter = Adapters.PersonDataAdapter
-var TaxCalculator = Calculator.TaxCalculator
-var WithdrawalCalculator = Calculator.WithdrawalCalculator
+import {NonAccumulatingAccount, TaxCategory, Expense} from '../../app/models/non-accumulating-account'
+import AccumulatingAccount from '../../app/models/accumulating-account'
+import _ from 'lodash'
+import PersonDataAdapter from '../../app/adapters/person-data-adapter'
+import TaxCalculator from '../../app/calculators/tax-calculator'
+import WithdrawalCalculator from '../../app/calculators/withdrawal-calculator'
+import Constants from '../../app/constants'
+import Person from '../../app/models/person'
+import CashFlow from '../../app/models/cash-flow'
 
 describe('Person', function() {
   var person
@@ -684,7 +684,7 @@ describe('Person', function() {
 
     })
 
-    fdescribe('with available traditional funds', () => {
+    describe('with available traditional funds', () => {
       it('accounts for federal income tax withholding when calculating the withdrawal from traditional funds', () => {
 
       })

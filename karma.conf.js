@@ -1,74 +1,67 @@
-// Karma configuration
-// Generated on Sun Feb 12 2017 10:51:35 GMT-0500 (EST)
+var HTMLWebpackPlugin = require('html-webpack-plugin')
+var HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
+  // config object here
+  template: __dirname + '/app/index.html',
+  filename: 'index.html',
+  inject: 'body'
+})
 
 module.exports = function(config) {
   config.set({
-    // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
+    reporters: ['dots'],
+    port: 8080,
+    colors: true,
+    logLevel: config.LOG_INFO,
+    autoWatch: true,
+    browsers: ['Chrome'],
+    singleRun: true,
+    autoWatchBatchDelay: 300,
 
-    // list of files / patterns to load in the browser
     files: [
-      'bower_components/lodash/lodash.js',
-      'scripts/adapters/adapters.js',
-      'scripts/adapters/*.js',
-      'scripts/constants/*.js',
-      'scripts/calculators/*.js',
-      'scripts/models/models.js',
-      'scripts/models/*.js',
-      'scripts/services/services.js',
-      'scripts/services/*.js',
-      'spec/**/*.js'
+      'spec/*-spec.js',
+      'spec/**/*-spec.js'
+      // each file acts as entry point for the webpack configuration
     ],
 
-    // list of files to exclude
-    exclude: [
-      //Don't include document interaction in unit test runs
-      'scripts/document-listeners/*.js '
-    ],
-
-
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      './app/index.js': ['webpack'],
+      './spec/**/*-spec.js': ['webpack'],
+      // 'spec/*-spec.js': ['webpack']
     },
 
+    webpack: module.exports = {
+      mode: 'development',
+      entry: __dirname + '/app/index.js',
+      // devServer: {
+      //   contentBase: './build'
+      // },
+      module: {
+        rules: [
+          {
+            test: /\.css$/,
+            use: ['style-loader','css-loader']
+          },
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader'
+          }
+        ]
+      },
+      output: {
+        filename: '[name].js',
+        path: __dirname + '/build'
+      },
+      plugins: [
+        HTMLWebpackPluginConfig
+      ]
+    },
 
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['dots'],
-
-
-    // web server port
-    port: 9876,
-
-
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
-
-
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
-
-
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
-
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
-
-    // Concurrency level
-    // how many browser should be started simultaneous
-    concurrency: Infinity
+    webpackMiddleware: {
+      noInfo: true
+    }
   })
 }
