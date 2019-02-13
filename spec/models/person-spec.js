@@ -907,7 +907,7 @@ describe('Person', function() {
                 spyOn(WithdrawalCalculator, 'traditionalWithdrawalsToGoal').and.returnValue(traditionalTaxableIncome)
               })
 
-              it('withdraws up to standard deduction from traditional funds , and the divides the remainder from both basis types', () => {
+              it('withdraws up to standard deduction from traditional funds, and the divides the remainder from both basis types', () => {
                 person.createSpendDownPeriod({
                   retirementSpending: retirementSpending,
                   retirementLength: retirementLength
@@ -916,7 +916,7 @@ describe('Person', function() {
                 //magic numbers representing spending up to the standard deduction from
                 //traditional funds, then withdrawing proportionally between roth and traditional
                 let traditionalSpending = 12900
-                let rothSpending = 2400
+                let rothSpending = 3200
 
                 createsTraditionalWithdrawal(traditionalSpending)
                 createsRothWithdrawal(rothSpending)
