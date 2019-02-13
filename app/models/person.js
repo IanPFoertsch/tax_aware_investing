@@ -123,8 +123,7 @@ Person.prototype.retirementWithdrawalsForIndex = function(index, retirementSpend
     rothWithdrawals = remainingIncomeToFill
   }
 
-
-  this.createRothWithdrawal(rothWithdrawals - netIncome, index, index)
+  this.createRothWithdrawal(rothWithdrawals, index, index)
 }
 
 Person.prototype.createFlows = function(value, startYear, endYear, sourceAccount, targetAccount) {
