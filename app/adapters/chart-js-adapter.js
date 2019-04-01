@@ -1,4 +1,3 @@
-'use-strict';
 function ChartJSAdapter() {}
 
 var stackedLineConfig = function() {
@@ -16,8 +15,8 @@ var stackedLineConfig = function() {
         }]
       }
     }
-  };
-};
+  }
+}
 
 var stackedBarConfig = function() {
   return {
@@ -31,14 +30,14 @@ var stackedBarConfig = function() {
         stacked: true
       }] }
     }
-  };
-};
+  }
+}
 
 ChartJSAdapter.chartConfig = function(type) {
   switch(type) {
   case 'line':
-    return stackedLineConfig();
+    return stackedLineConfig()
   case 'bar':
-    return stackedBarConfig();
+    return stackedBarConfig()
   }
-};
+}

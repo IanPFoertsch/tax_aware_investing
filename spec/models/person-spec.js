@@ -171,14 +171,14 @@ describe('Person', function() {
         Constants.ROTH_401K,
         TaxCategory,
         'getTaxCategory',
-        Constants.ROTH_WITHDRAWALS
+        Constants.ROTH_WITHDRAWAL
       )
 
       expectCreateFlowsDelegationFromMethod(
         'createRothWithdrawal',
         TaxCategory,
         'getTaxCategory',
-        Constants.ROTH_WITHDRAWALS,
+        Constants.ROTH_WITHDRAWAL,
         TaxCategory,
         'getTaxCategory',
         Constants.TOTAL_INCOME

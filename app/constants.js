@@ -11,7 +11,8 @@ class Constants {
   static get TRADITIONAL_401K_CONTRIBUTIONS() { return'Traditional 401k Contributions' }
   static get ROTH_401K_CONTRIBUTIONS() { return'Roth 401k Contributions' }
 
-  static get TRADITIONAL_WITHDRAWAL() { return'Traditional Withdrawals' }
+  static get TRADITIONAL_WITHDRAWAL() { return 'Traditional Withdrawals' }
+  static get ROTH_WITHDRAWAL() { return 'Roth Withdrawals' }
 
   static get WAGES_AND_COMPENSATION() { return 'Wages and Compensation' }
   static get CAREER_LENGTH() { return'Career Length' }

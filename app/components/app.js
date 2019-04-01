@@ -2,7 +2,7 @@ var React = require('react')
 import Constants from '../constants'
 import InputTable from './input-table'
 import LineChartHolder from './line-chart-holder'
-import BarChartHolder from './bar-chart-holder'
+import SankeyChartHolder from './sankey-chart-holder'
 import PersonService from '../services/person-service'
 import { connect } from 'react-redux'
 
@@ -50,6 +50,7 @@ class App extends React.Component {
 
   render() {
     var person = this.buildPerson(this.props.person)
+    console.log(person)
     return (
       <div>
         <div>
@@ -67,7 +68,9 @@ class App extends React.Component {
           <LineChartHolder
             person={person}
           />
-          <BarChartHolder />
+          <SankeyChartHolder
+            person={person}
+          />
         </div>
       </div>
     )

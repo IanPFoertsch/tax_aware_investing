@@ -167,7 +167,7 @@ Person.prototype.createSocialSecurityWageFlows = function() {
 //TODO: Testing for this change
 Person.prototype.createRothWithdrawal = function(value, startYear, endYear) {
   var roth401k = this.getAccumulatingAccount(Constants.ROTH_401K)
-  var rothWithdrawals = this.getTaxCategory(Constants.ROTH_WITHDRAWALS)
+  var rothWithdrawals = this.getTaxCategory(Constants.ROTH_WITHDRAWAL)
   var totalIncome = this.getTaxCategory(Constants.TOTAL_INCOME)
   this.createFlows(value, startYear, endYear, roth401k, rothWithdrawals)
   this.createFlows(value, startYear, endYear, rothWithdrawals, totalIncome)
@@ -190,7 +190,6 @@ Person.prototype.createFederalIncomeTaxFlows = function(value, startYear, endYea
 
 Person.prototype.createFederalIncomeWithHolding = function(startYear, endYear) {
   var indexes = _.range(startYear, endYear + 1)
-  // dfadf
   _.forEach(indexes, (timeIndex) => {
     var taxableIncome = this.taxableIncomeForIndex(timeIndex)
     var federalIncomeTax = TaxCalculator.federalIncomeTax(taxableIncome)
@@ -310,6 +309,10 @@ Person.prototype.getThirdPartyAccount = function(accountName) {
 }
 
 Person.prototype.getTaxCategory = function(categoryName) {
+  if (categoryName == undefined) {
+
+    console.log(new Error.stack())
+  }
   this.taxCategories[categoryName] = this.taxCategories[categoryName] || new TaxCategory(categoryName)
   return this.taxCategories[categoryName]
 }
@@ -327,6 +330,10 @@ Person.prototype.getAccountFlowBalanceByTime = function () {
   var graphableAccounts = _.assign({}, this.accounts, this.expenses)
 
   return PersonDataAdapter.flowBalanceByTimeData(graphableAccounts, maxTime)
+}
+
+Person.prototype.getYearlyFlowData = function() {
+  return PersonDataAdapter.getYearlyFlowData(this, 40)
 }
 
 export default Person
