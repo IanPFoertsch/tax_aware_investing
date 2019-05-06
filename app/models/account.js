@@ -44,6 +44,12 @@ export default class Account {
     }, 0) || 0
   }
 
+  getOutflowValueToExpense(time, targetAccountLabel) {
+    return this.expenses[time].find((cashflow) => {
+      return cashflow.target.label === targetAccountLabel
+    }).value
+  }
+
   //private
   registerInFlow(cashFlow) {
     var time = cashFlow.time
@@ -65,7 +71,7 @@ export default class Account {
   }
 
   createExpense(timeIndex, value, toAccount) {
-    var flow = new CashFlow(timeIndex, value, toAccount, this)
+    var flow = new CashFlow(timeIndex, value, this, toAccount)
     this.registerOutFlow(flow)
     toAccount.registerInFlow(flow)
   }

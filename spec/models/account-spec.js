@@ -128,4 +128,27 @@ describe('Account', function() {
       })
     })
   })
+
+  describe('getOutflowValueToExpense', () => {
+    var socialSecurityAccount
+    var medicareAccount
+    var timeIndex = 5
+    var socialSecurityValue = 100
+    var medicareValue = 200
+
+    beforeEach(()=> {
+      socialSecurityAccount = new Account(Constants.SOCIAL_SECURITY)
+      medicareAccount = new Account(Constants.MEDICARE)
+      account.createExpense(timeIndex, socialSecurityValue, socialSecurityAccount)
+      account.createExpense(timeIndex, medicareValue, medicareAccount)
+    })
+
+    it('returns the expense value at the specified time', () => {
+      expect(
+        account.getOutflowValueToExpense(
+          timeIndex, Constants.SOCIAL_SECURITY
+        )
+      ).toEqual(socialSecurityValue)
+    })
+  })
 })
