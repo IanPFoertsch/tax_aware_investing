@@ -21,6 +21,7 @@ class App extends React.Component {
 
   buildPerson(personData) {
     var personService = new PersonService(personData)
+    console.log(personData)
     return personService.buildPerson()
   }
 
@@ -50,7 +51,7 @@ class App extends React.Component {
 
   render() {
     var person = this.buildPerson(this.props.person)
-    console.log(person)
+
     return (
       <div>
         <div>

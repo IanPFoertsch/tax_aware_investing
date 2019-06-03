@@ -2,6 +2,7 @@ import {NonAccumulatingAccount, TaxCategory, Expense} from './non-accumulating-a
 import AccumulatingAccount from './accumulating-account'
 import _ from 'lodash'
 import PersonDataAdapter from '../adapters/person-data-adapter'
+import SankeyDataAdapter from '../adapters/sankey-data-adapter'
 import TaxCalculator from '../calculators/tax-calculator'
 import WithdrawalCalculator from '../calculators/withdrawal-calculator'
 import Constants from '../constants'
@@ -31,6 +32,7 @@ Person.prototype.timeIndices = function() {
   return _.reduce(allAccounts, (accumulator, account) => {
     return _.uniq(accumulator.concat(account.timeIndices())).sort(( function(a,b) { return a - b } ))
   }, [])
+
 }
 
 Person.prototype.createWorkingPeriod = function(options) {
@@ -332,8 +334,17 @@ Person.prototype.getAccountFlowBalanceByTime = function () {
   return PersonDataAdapter.flowBalanceByTimeData(graphableAccounts, maxTime)
 }
 
-Person.prototype.getYearlyFlowData = function() {
-  return PersonDataAdapter.getYearlyFlowData(this, 40)
+Person.prototype.getSankeyLifetimeFlowSummary = function() {
+  return SankeyDataAdapter.getSankeyLifetimeFlowSummary(this)
+}
+
+Person.prototype.getLifetimeIncomeFromSource = function(accountLabel) {
+  var account = this.taxCategories[accountLabel]
+  return account.getLifetimeContributions()
+}
+
+Person.prototype.getLifetimeContributionsToExpense = function(accountLable) {
+  return this.getExpense(accountLable).getLifetimeContributions()
 }
 
 export default Person

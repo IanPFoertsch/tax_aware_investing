@@ -12,7 +12,8 @@ module.exports = {
   mode: 'development',
   entry: __dirname + '/app/index.js',
   devServer: {
-    contentBase: './build'
+    contentBase: './build',
+    open: 'firefox'
   },
   module: {
     rules: [

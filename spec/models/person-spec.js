@@ -15,6 +15,20 @@ describe('Person', function() {
     person = new Person()
   })
 
+  describe('getLifetimeContributionsToExpense', () => {
+    var expense
+
+    beforeEach(()=> {
+      expense = person.getExpense(Constants.MEDICARE)
+    })
+
+    it('gets the lifetime contributions from the expense', () => {
+      spyOn(expense, 'getLifetimeContributions')
+      person.getLifetimeContributionsToExpense(Constants.MEDICARE)
+      expect(expense.getLifetimeContributions).toHaveBeenCalledWith()
+    })
+  })
+
   describe('timeIndices', () => {
     var account
 

@@ -151,4 +151,64 @@ describe('Account', function() {
       ).toEqual(socialSecurityValue)
     })
   })
+
+  describe('getLifetimeContributions', () => {
+    var wages
+    var investments
+    var totalIncome
+    var wagesValue = 100
+    var investmentValue = 25
+    var timePeriods = 2
+
+    beforeEach(() => {
+      wages = new Account(Constants.WAGES_AND_COMPENSATION)
+      investments = new Account('TAXABLE INTEREST')
+      totalIncome = new Account(Constants.TOTAL_INCOME)
+    })
+
+    describe('with one source of account inflows', () => {
+      beforeEach(()=> {
+        [...Array(timePeriods).keys()].forEach((key) => {
+          totalIncome.createInFlow(key, wagesValue, wages)
+        })
+      })
+
+      it('returns the total from the single inflow', () => {
+        expect(totalIncome.getLifetimeContributions()).toEqual(wagesValue * timePeriods)
+      })
+    })
+
+    describe('with multiple account inflows', () => {
+      beforeEach(()=> {
+        [...Array(timePeriods).keys()].forEach((key) => {
+          totalIncome.createInFlow(key, wagesValue, wages)
+          totalIncome.createInFlow(key, investmentValue, investments)
+        })
+      })
+
+      it('returns the total from the both inflow sources', () => {
+        var expectedTotal = (wagesValue * timePeriods) + (investmentValue * timePeriods)
+        expect(totalIncome.getLifetimeContributions()).toEqual(expectedTotal)
+      })
+
+      describe('and account outflows', () => {
+        var taxableIncome
+        var incomeValue
+
+        beforeEach(() => {
+          taxableIncome = new Account(Constants.TAXABLE_INCOME)
+          var indexes = [...Array(timePeriods).keys()]
+          indexes.forEach((timeIndex) => {
+            incomeValue = wagesValue + investmentValue
+            taxableIncome.createInFlow(timeIndex, incomeValue, totalIncome)
+          })
+        })
+
+        it('returns the total incoming value, not subtracting the outflow', () => {
+          var expectedTotal = (wagesValue * timePeriods) + (investmentValue * timePeriods)
+          expect(totalIncome.getLifetimeContributions()).toEqual(expectedTotal)
+        })
+      })
+    })
+  })
 })

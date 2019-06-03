@@ -12,6 +12,17 @@ export default class Account {
     return this.label
   }
 
+  getLifetimeContributions() {
+    var lifeTimeContributions = 0
+    var years = Object.keys(this.contributions)
+    years.forEach((year) => {
+      this.contributions[year].forEach((cashFlow) => {
+        lifeTimeContributions += cashFlow.value
+      })
+    })
+    return lifeTimeContributions
+  }
+
   flows() {
     return this.getPositiveFlowList().concat(this.getNegativeFlowList())
   }
@@ -45,6 +56,7 @@ export default class Account {
   }
 
   getOutflowValueToExpense(time, targetAccountLabel) {
+
     return this.expenses[time].find((cashflow) => {
       return cashflow.target.label === targetAccountLabel
     }).value
