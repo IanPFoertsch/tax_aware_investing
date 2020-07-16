@@ -16,7 +16,7 @@
     "jQuery": "^1.7.4",
     "karma": "^3.0.0",
     "karma-cli": "^1.0.1",
-    "lodash": "^4.16.6",
+    "lodash": "^4.17.19",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.1",
