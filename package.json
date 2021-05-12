@@ -28,7 +28,7 @@
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "chart.js": "^2.7.3",
+    "chart.js": "^2.9.4",
     "css-loader": "^1.0.1",
     "e": "0.0.4",
     "eslint": "^4.19.1",
